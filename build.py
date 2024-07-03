@@ -17,4 +17,13 @@ ip -br a
 sudo journalctl -f -u keepalived
 
 #load haproxy config
-sudo journalctl -f -u keepalived
+nano /etc/haproxy/haproxy.cfg
+
+#check config
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c -V
+
+#Update HAProxy file descriptor (FD)/open files (NOFILE) limit (done system wide);
+echo "fs.nr_open = 1048599" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
+#start and enable haproxy
