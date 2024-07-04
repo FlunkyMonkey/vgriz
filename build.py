@@ -1,3 +1,5 @@
+https://kifarunix.com/setup-highly-available-kubernetes-cluster-with-haproxy-and-keepalived/
+
 #Install keepalived
 apt -y install keepalived
 
