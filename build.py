@@ -75,3 +75,30 @@ sudo sed -i '/pause:3.8/s/3.8/3.9/' /etc/containerd/config.toml
 grep sandbox_image /etc/containerd/config.toml
 sudo systemctl enable --now containerd
 systemctl status containerd
+
+#Install Kubernetes Repository GPG Signing Key
+sudo apt install gnupg2 -y
+
+VER=1.30
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v${VER}/deb/Release.key | \
+sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/k8s.gpg
+
+#Install Kubernetes Repository on Ubuntu 24.04
+echo "deb https://pkgs.k8s.io/core:/stable:/v${VER}/deb/ /" | sudo tee /etc/apt/sources.list.d/kurbenetes.list
+sudo apt update
+sudo apt install kubelet kubeadm kubectl -y
+
+#Mark Hold Kubernetes Packages
+sudo apt-mark hold kubeadm kubelet kubectl
+sudo apt-mark showhold
+
+#Open Kubernetes Cluster Ports on Firewall
+
+#Load Balancer
+sudo iptables -A INPUT -p tcp -m multiport --dports 22,6443 -j ACCEPT
+
+#control plane
+sudo iptables -A INPUT -p tcp -m multiport --dports 6443,2379:2380,10250:10252 -j ACCEPT
+
+#worker
+sudo iptables -A INPUT -p tcp -m multiport --dports 10250,10256,30000:32767 -j ACCEPT
