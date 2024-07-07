@@ -1,9 +1,15 @@
-/etc/rancher/rke2/config.yaml
-
 token: my-shared-secret
 tls-san:
   - rancher.vgriz.com
-disable-apiserver: true
-disable-controller-manager: true
-disable-scheduler: true
-disable-etcd: true
+  - kube1.vgriz.com
+  - kube2.vgriz.com
+  - kube3.vgriz.com
+  - kubemaster1.vgriz.com
+  - kubemaster2.vgriz.com
+  - kubemaster3.vgriz.com
+server: https://rancher.vgriz.com:9345
+node-name: kubemaster3
+
+curl -sfL https://get.rke2.io | sh -
+sudo systemctl enable rke2-agent.service
+sudo systemctl start rke2-agent.service

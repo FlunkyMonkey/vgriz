@@ -7,3 +7,5 @@ tls-san:
   - kubemaster1.vgriz.com
   - kubemaster2.vgriz.com
   - kubemaster3.vgriz.com
+server: https://rancher.vgriz.com:9345
+node-name: kubemaster3
