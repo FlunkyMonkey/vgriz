@@ -102,3 +102,32 @@ sudo iptables -A INPUT -p tcp -m multiport --dports 6443,2379:2380,10250:10252 -
 
 #worker
 sudo iptables -A INPUT -p tcp -m multiport --dports 10250,10256,30000:32767 -j ACCEPT
+
+#all
+sudo iptables-save | sudo tee /etc/iptables/rules.v4
+sudo systemctl restart netfilter-persistent
+
+#Initialize First Control Plane
+sudo kubeadm init \
+	--control-plane-endpoint "172.18.232.30:6443" \
+	--upload-certs \
+	--pod-network-cidr=10.100.0.0/16
+
+#Next, to be able to interact with the cluster from the first control plane, run the following commands, as non-root user.
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl cluster-info
+
+#Deploy Pod Network Addon on the Control Plane
+CNI_VER=3.28.0
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v${CNI_VER}/manifests/tigera-operator.yaml
+wget https://raw.githubusercontent.com/projectcalico/calico/v${CNI_VER}/manifests/custom-resources.yaml
+sed -i 's/192.168/10.100/' custom-resources.yaml
+kubectl create -f custom-resources.yaml
+kubectl get pods --all-namespaces
+
+#other control nodes
+sudo kubeadm init phase upload-certs --upload-certs
+kubeadm token create --print-join-command
+kubeadm join 172.18.232.30:6443 --token l5eal6.kes6ka77ddi96j0f --discovery-token-ca-cert-hash sha256:9277ba975d604ac01dd4340a92a054b43aa0b6464bca9a296ca0a547ab07df36 
