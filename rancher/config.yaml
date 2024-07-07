@@ -3,3 +3,9 @@
 token: my-shared-secret
 tls-san:
   - rancher.vgriz.com
+  - kube1.vgriz.com
+  - kube2.vgriz.com
+  - kube3.vgriz.com
+  - kubemaster1.vgriz.com
+  - kubemaster2.vgriz.com
+  - kubemaster3.vgriz.com

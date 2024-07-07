@@ -22,8 +22,8 @@ sudo systemctl status docker
 
 sudo usermod -aG docker ubuntu
 
+sudo su
 mkdir -p /etc/rancher/rke2/
-
 nano /etc/rancher/rke2/config.yaml
 
 curl -sfL https://get.rke2.io | sh -
@@ -40,6 +40,7 @@ snap install kubectl --classic
 
 mkdir ~/.kube
 cp /etc/rancher/rke2/rke2.yaml ~/.kube/config
+snap install kubectl --classic
 nano ~/.kube/config
 # Update Config
 
