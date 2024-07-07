@@ -131,3 +131,9 @@ kubectl get pods --all-namespaces
 sudo kubeadm init phase upload-certs --upload-certs
 kubeadm token create --print-join-command
 kubeadm join 172.18.232.30:6443 --token l5eal6.kes6ka77ddi96j0f --discovery-token-ca-cert-hash sha256:9277ba975d604ac01dd4340a92a054b43aa0b6464bca9a296ca0a547ab07df36 
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl cluster-info
+
