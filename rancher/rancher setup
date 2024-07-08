@@ -7,3 +7,18 @@ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 
 kubectl create namespace cattle-system
 
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+kubectl create namespace cert-manager
+
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.5.3 \
+  --set installCRDs=true
+
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.vgriz.com \
+  --set ingress.tls.source=rancher \
+  --set replicas=3
