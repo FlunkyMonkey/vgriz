@@ -22,3 +22,5 @@ helm install rancher rancher-latest/rancher \
   --set hostname=rancher.vgriz.com \
   --set ingress.tls.source=rancher \
   --set replicas=3
+
+  
