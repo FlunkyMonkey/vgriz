@@ -1,0 +1,17 @@
+options {
+    directory "/var/cache/bind";
+
+    // Forwarders configuration
+    forwarders {
+        8.8.8.8;     // Google DNS
+        8.8.4.4;     // Google DNS
+        1.1.1.1;     // Cloudflare DNS
+        1.0.0.1;     // Cloudflare DNS
+    };
+
+    allow-query { any; };
+
+    dnssec-validation auto;
+
+    listen-on-v6 { any; };
+};

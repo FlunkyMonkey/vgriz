@@ -1,0 +1,4 @@
+zone "vgriz.com" {
+    type master;
+    file "/etc/bind/db.vgriz.com";
+};
