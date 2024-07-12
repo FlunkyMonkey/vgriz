@@ -1,0 +1,40 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.18.232.251/32
+  - 172.18.232.252/32
+  - 172.18.232.253/32
+  - 172.18.232.254/32
+  autoAssign: true
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  myASN: 64790
+  peerASN: 64791
+  peerAddress: 172.18.232.1
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default
