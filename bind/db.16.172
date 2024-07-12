@@ -1,0 +1,46 @@
+$TTL 3600
+@   IN  SOA ns1.vgriz.com. admin.vgriz.com. (
+        2024070801 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        1209600    ; Expire
+        86400      ; Minimum TTL
+)
+@   IN  NS  ns1.vgriz.com.
+@   IN  NS  ns2.vgriz.com.
+
+# PTR Records
+10.232.18.172.in-addr.arpa. IN PTR dc01.ad.vgriz.com.
+10.5.18.172.in-addr.arpa.   IN PTR DC02.ad.vgriz.com.
+5.1.18.172.in-addr.arpa.    IN PTR basementwap.vgriz.com.
+4.1.18.172.in-addr.arpa.    IN PTR denwap.vgriz.com.
+10.1.18.172.in-addr.arpa.   IN PTR esx01.vgriz.com.
+20.1.18.172.in-addr.arpa.   IN PTR esx02.vgriz.com.
+30.1.18.172.in-addr.arpa.   IN PTR esx03.vgriz.com.
+28.1.18.172.in-addr.arpa.   IN PTR sdr.vgriz.com.
+38.1.18.172.in-addr.arpa.   IN PTR peakups.vgriz.com.
+39.1.18.172.in-addr.arpa.   IN PTR peakups02.vgriz.com.
+39.1.18.172.in-addr.arpa.   IN PTR peakups02mgmt.vgriz.com.
+38.1.18.172.in-addr.arpa.   IN PTR peakupsmgmt.vgriz.com.
+1.1.18.172.in-addr.arpa.    IN PTR pfsense.vgriz.com.
+11.1.18.172.in-addr.arpa.   IN PTR mbipmi01mgmt.vgriz.com.
+21.1.18.172.in-addr.arpa.   IN PTR mbipmi02mgmt.vgriz.com.
+13.1.18.172.in-addr.arpa.   IN PTR mikrotik.vgriz.com.
+12.1.18.172.in-addr.arpa.   IN PTR unifi.vgriz.com.
+7.1.18.172.in-addr.arpa.    IN PTR unifiswitch.vgriz.com.
+50.1.18.172.in-addr.arpa.   IN PTR monitor.vgriz.com.
+96.1.18.172.in-addr.arpa.   IN PTR TrueNAS01.vgriz.com.
+97.1.18.172.in-addr.arpa.   IN PTR TrueNAS02.vgriz.com.
+6.1.18.172.in-addr.arpa.    IN PTR rancherwap.vgriz.com.
+28.232.18.172.in-addr.arpa. IN PTR lb1.vgriz.com.
+29.232.18.172.in-addr.arpa. IN PTR lb2.vgriz.com.
+30.232.18.172.in-addr.arpa. IN PTR rancher.vgriz.com.
+31.232.18.172.in-addr.arpa. IN PTR kubemaster1.vgriz.com.
+32.232.18.172.in-addr.arpa. IN PTR kubemaster2.vgriz.com.
+33.232.18.172.in-addr.arpa. IN PTR kubemaster3.vgriz.com.
+41.232.18.172.in-addr.arpa. IN PTR kube1.vgriz.com.
+42.232.18.172.in-addr.arpa. IN PTR kube2.vgriz.com.
+43.232.18.172.in-addr.arpa. IN PTR kube3.vgriz.com.
+230.232.18.172.in-addr.arpa. IN PTR vcenter.vgriz.com.
+10.5.18.172.in-addr.arpa.   IN PTR ntp.vgriz.com.
+10.232.18.172.in-addr.arpa. IN PTR ntp.vgriz.com.

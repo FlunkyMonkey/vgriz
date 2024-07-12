@@ -1,0 +1,24 @@
+$TTL 3600
+@   IN  SOA ns1.vgriz.com. admin.vgriz.com. (
+        2024070801 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        1209600    ; Expire
+        86400      ; Minimum TTL
+)
+@   IN  NS  ns1.vgriz.com.
+@   IN  NS  ns2.vgriz.com.
+
+# PTR Records
+10.20.20.10.in-addr.arpa.  IN  PTR esx01vmo.vgriz.com.
+20.20.20.10.in-addr.arpa.  IN  PTR esx02vmo.vgriz.com.
+30.20.20.10.in-addr.arpa.  IN  PTR esx03vmo.vgriz.com.
+10.30.30.10.in-addr.arpa.  IN  PTR esx01nfs.vgriz.com.
+20.30.30.10.in-addr.arpa.  IN  PTR esx02nfs.vgriz.com.
+30.30.30.10.in-addr.arpa.  IN  PTR esx03nfs.vgriz.com.
+1.30.30.10.in-addr.arpa.   IN  PTR vlan103-nfs.vgriz.com.
+2.1.0.10.in-addr.arpa.     IN  PTR pi.vgriz.com.
+10.16.1.10.in-addr.arpa.   IN  PTR rdp.vgriz.com.
+15.16.1.10.in-addr.arpa.   IN  PTR web.vgriz.com.
+1.16.1.10.in-addr.arpa.    IN  PTR vlan161-dmz.vgriz.com.
+5.16.1.10.in-addr.arpa.    IN  PTR yourhostname.vgriz.com.
