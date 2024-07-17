@@ -2,3 +2,17 @@ zone "vgriz.com" {
     type master;
     file "/etc/bind/db.vgriz.com";
 };
+zone "10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.10";
+};
+
+zone "16.172.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.16.172";
+};
+
+zone "168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.168.192";
+};
