@@ -126,3 +126,5 @@ www                 IN  A     10.16.1.5
 WyzePlug1           IN  A     192.168.4.80
 WyzePlug2           IN  A     192.168.4.81
 XPS13               IN  A     192.168.4.64
+DNS1               IN  A     172.18.232.10
+DNS2               IN  A     172.18.5.10
