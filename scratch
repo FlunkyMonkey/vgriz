@@ -1,0 +1,13 @@
+#Environment
+
+all DNS is .vgriz.com
+
+ubemaster1 - control node - rke2 - ubuntu 22.04
+kubemaster2 - control node - rke2 - ubuntu 22.04
+kubemaster3 - control node - rke2 - ubuntu 22.04
+kube1 - worker node - rke2 - ubuntu 22.04
+kube2 - worker node - rke2 - ubuntu 22.04
+kube3 - worker node - rke2 - ubuntu 22.04
+lb1 - haproxy/keepalived - 172.18.232.28 - ubuntu 22.04
+lb2 - haproxy/keepalived - 172.18.232.29 - ubuntu 22.04
+rancher.vgriz.com - 172.18.232.30 - load balancer vrrp ip forwards to 172.18.232.30
