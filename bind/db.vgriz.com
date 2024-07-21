@@ -128,3 +128,7 @@ WyzePlug2           IN  A     192.168.4.81
 XPS13               IN  A     192.168.4.64
 DNS1                IN  A     172.18.232.10
 DNS2                IN  A     172.18.5.10
+wazuh               IN  A     172.18.232.243
+prometheus          IN  A     172.18.232.241
+unifi               IN  A     172.18.232.251
+grafana             IN  A     172.18.232.242
