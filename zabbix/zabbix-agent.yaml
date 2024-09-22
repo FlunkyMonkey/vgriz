@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbix-agent
+  namespace: monitoring
+  labels:
+    app: zabbix-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-agent
+  template:
+    metadata:
+      labels:
+        app: zabbix-agent
+    spec:
+      containers:
+        - name: zabbix-agent
+          image: zabbix/zabbix-agent:ubuntu-4.4.5
+          env:
+            - name: ZBX_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: zabbix-app
+                  key: ZBX_SERVER_HOST
+            - name: ZBX_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: zabbix-app
+                  key: ZBX_HOSTNAME
+          ports:
+            - containerPort: 10050
+          resources: {}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: zabbix-agent-config
+              mountPath: /etc/zabbix/zabbix_agentd.d
+              readOnly: true
+      volumes:
+        - name: zabbix-agent-config
+          configMap:
+            name: zabbix-agent-config
+            items:
+              - key: zabbix_agentd.conf
+                path: zabbix_agentd.conf
+---
+# Service for Zabbix Agent
+apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-agent
+  namespace: monitoring
+  labels:
+    app: zabbix-agent
+spec:
+  ports:
+    - port: 10050
+      targetPort: 10050
+  selector:
+    app: zabbix-agent
