@@ -1,0 +1,48 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  namespace: teslamate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:2
+          command: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
+          ports:
+            - containerPort: 1883
+          volumeMounts:
+            - name: mosquitto-conf
+              mountPath: /mosquitto/config
+            - name: mosquitto-data
+              mountPath: /mosquitto/data
+      volumes:
+        - name: mosquitto-conf
+          persistentVolumeClaim:
+            claimName: mosquitto-conf-pvc
+        - name: mosquitto-data
+          persistentVolumeClaim:
+            claimName: mosquitto-data-pvc
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  namespace: teslamate
+spec:
+  selector:
+    app: mosquitto
+  ports:
+    - protocol: TCP
+      port: 1883
+      targetPort: 1883

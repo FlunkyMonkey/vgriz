@@ -1,0 +1,79 @@
+services:
+  teslamate:
+    image: teslamate/teslamate:latest
+    restart: always
+    environment:
+      - ENCRYPTION_KEY=secretkey #replace with a secure key to encrypt your Tesla API tokens
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=password #insert your secure database password!
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+      - MQTT_HOST=mosquitto #Mike: How would this be handled as probably a seperate container in Kubernetes?
+    ports:
+      - 4000:4000 #Mike: Load Balancer via MetalLB
+    volumes:
+      - ./import:/opt/app/import #Mike: PVC on NFS Storage Class
+    cap_drop: #Mike: not sure if this applies to Kubernetes
+      - all
+
+  database: #Mike: Run this as it's own pod or as a statefulset?
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=teslamate
+      - POSTGRES_PASSWORD=password #insert your secure database password!
+      - POSTGRES_DB=teslamate
+    volumes:
+      - teslamate-db:/var/lib/postgresql/data #Mike: PVC on NFS Storage Class
+
+  grafana: #Mike: I already have grafana running in Kubernetes
+    image: teslamate/grafana:latest
+    restart: always
+    environment:
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=password #insert your secure database password!
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+    ports:
+      - 3000:3000
+    volumes:
+      - teslamate-grafana-data:/var/lib/grafana
+
+  mosquitto: #Mike: This would need to be a seperate pod or statefulset in Kubernetes, I dont have mosquitto running in Kubernetes
+    image: eclipse-mosquitto:2
+    restart: always
+    command: mosquitto -c /mosquitto-no-auth.conf #Mike: How would this be handled in Kubernetes?
+    # ports: #Mike: not sure why the guide has this commented out
+    #   - 1883:1883 #Mike: not sure why the guide has this commented out
+    volumes:
+      - mosquitto-conf:/mosquitto/config #Mike: PVC on NFS Storage Class
+      - mosquitto-data:/mosquitto/data
+
+volumes:
+  teslamate-db: #Mike: PVC on NFS Storage Class
+  teslamate-grafana-data: #Mike: PVC on NFS Storage Class
+  mosquitto-conf: #Mike: PVC on NFS Storage Class
+  mosquitto-data: #Mike: PVC on NFS Storage Class
+
+#Mike: Example script stops here
+
+
+#Mike: I have the following services running in Kubernetes:
+Here is some additional information:
+
+root@kubemaster1:/home/mikeb# kubectl get services -n monitoring
+NAME                           TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
+grafana                        ClusterIP      10.43.44.232    <none>           3000/TCP       58d
+grafana-loadbalancer           LoadBalancer   10.43.93.243    172.18.232.242   80:30507/TCP   58d
+prometheus                     ClusterIP      10.43.8.125     <none>           9090/TCP       58d
+prometheus-loadbalancer        LoadBalancer   10.43.142.173   172.18.232.241   80:32400/TCP   58d
+prometheus-snmp-exporter       ClusterIP      10.43.54.81     <none>           9116/TCP       55d
+prometheus-snmp-exporter-web   LoadBalancer   10.43.226.158   172.18.232.244   80:32168/TCP   54d
+
+#Mike: I have the following storage class running in Kubernetes:
+root@kubemaster1:/home/mikeb# kubectl get storageclass
+NAME         PROVISIONER                                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+nfs-client   cluster.local/nfs-subdir-external-provisioner   Delete          Immediate           true                   71d
+
+
+#Mike: I like to use h$1f*@hc0M as a password 

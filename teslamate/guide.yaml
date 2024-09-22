@@ -1,0 +1,24 @@
+kubectl create secret generic teslamate-db-secret \
+  --from-literal=POSTGRES_PASSWORD=h$1f*@hc0M -n teslamate
+
+kubectl create secret generic teslamate-encryption-key \
+  --from-literal=ENCRYPTION_KEY=h$1f*@hc0M -n teslamate
+
+  kubectl apply -f teslamate_pvc.yaml -n teslamate
+
+  kubectl get pvc -n teslamate
+
+kubectl apply -f postgres.yaml -n teslamate
+
+
+kubectl get pods -n teslamate -l app=database
+
+kubectl apply -f mosquitto.yaml -n teslamate
+
+kubectl get pods -n teslamate -l app=mosquitto
+
+kubectl apply -f teslamate.yaml -n teslamate
+
+kubectl get pods -n teslamate -l app=teslamate
+
+kubectl get service teslamate -n teslamate

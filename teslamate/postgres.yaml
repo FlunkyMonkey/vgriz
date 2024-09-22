@@ -1,0 +1,59 @@
+# Service (Headless)
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: teslamate
+spec:
+  clusterIP: None
+  selector:
+    app: database
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+# StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: database
+  namespace: teslamate
+spec:
+  serviceName: database
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "teslamate"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: teslamate-db-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: "teslamate"
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+        namespace: teslamate
+      spec:
+        storageClassName: nfs-client
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
