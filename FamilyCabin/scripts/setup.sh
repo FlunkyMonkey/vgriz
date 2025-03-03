@@ -1,4 +1,3 @@
-cat > scripts/setup.sh << 'EOF'
 #!/bin/bash
 set -e
 
