@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: familycabin-config
+  namespace: ${NAMESPACE}
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  MONGODB_URI: "mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb.${DB_NAMESPACE}.svc.cluster.local:27017/${MONGODB_DATABASE}?replicaSet=rs0&ssl=false"
+  FRONTEND_URL: "https://${SUBDOMAIN}.${DOMAIN}"
+  GUEST_PIN: "${GUEST_PIN}"
+  AUTO_APPROVE_GUESTBOOK: "false"
+  LOG_LEVEL: "info"

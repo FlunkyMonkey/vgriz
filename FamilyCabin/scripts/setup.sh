@@ -17,4 +17,3 @@ kubectl get namespace $DB_NAMESPACE >/dev/null 2>&1 || kubectl create namespace 
 kubectl config set-context --current --namespace=$NAMESPACE
 
 echo "Environment setup complete"
-EOF

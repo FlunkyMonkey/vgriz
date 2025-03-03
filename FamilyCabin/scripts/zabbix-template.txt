@@ -1,0 +1,19 @@
+# Zabbix Template Instructions
+
+This is a guide for configuring Zabbix monitoring for FamilyCabin.io.
+You will need to import this template into your Zabbix server.
+
+Template includes:
+- Host monitoring for API and Frontend pods
+- Web scenario to check application health endpoints
+- Trigger for service unavailability
+- Custom dashboard for FamilyCabin.io metrics
+
+Steps for configuration:
+1. Log in to your Zabbix web interface
+2. Go to Configuration > Templates
+3. Click "Import"
+4. Upload the zabbix-template.xml file (you will need to create this from the Zabbix export functionality)
+5. Apply the template to your FamilyCabin.io host
+
+Note: The actual XML template should be exported from your existing Zabbix system and customized for FamilyCabin.io.

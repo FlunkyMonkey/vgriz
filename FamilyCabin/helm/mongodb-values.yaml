@@ -1,0 +1,28 @@
+architecture: replicaset
+replicaCount: 1
+
+auth:
+  enabled: true
+  rootPassword: "${MONGODB_ROOT_PASSWORD}"
+  username: "${MONGODB_USERNAME}"
+  password: "${MONGODB_PASSWORD}"
+  database: "${MONGODB_DATABASE}"
+
+persistence:
+  enabled: true
+  size: 8Gi
+  storageClass: "${STORAGE_CLASS}"
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 250m
+  limits:
+    memory: 512Mi
+    cpu: 500m
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    namespace: "monitoring"

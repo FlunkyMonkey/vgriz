@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: familycabin-frontend
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: familycabin-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
