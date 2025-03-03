@@ -1,0 +1,11 @@
+# Update MongoDB configuration
+helm upgrade mongodb bitnami/mongodb \
+  --set auth.rootPassword=h$1f*@hc0M \
+  --set auth.username=familycabin \
+  --set auth.password=h$1f*@hc0M \
+  --set auth.database=familycabin \
+  -n familycabin-db
+
+
+
+mongodb://familycabin:hf*@hc0M@mongodb.familycabin-db.svc.cluster.local:27017/familycabin?replicaSet=rs0
